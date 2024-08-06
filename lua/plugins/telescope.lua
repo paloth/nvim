@@ -19,6 +19,7 @@ return {
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'nvim-telescope/telescope-project.nvim' },
 
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
@@ -59,6 +60,24 @@ return {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        project = {
+          base_dirs = {
+            '~/repos/',
+            { '~/.config/', max_depth = 2 },
+          },
+          hidden_files = true, -- default: false
+          display_type = 'minimal',
+          theme = 'dropdown',
+          order_by = 'desc',
+          search_by = 'title',
+          sync_with_nvim_tree = true, -- default false
+          -- default for on_project_selected = find project files
+          on_project_selected = function(prompt_bufnr)
+            -- Do anything you want in here. For example:
+            local project_actions = require 'telescope._extensions.project.actions'
+            project_actions.change_working_directory(prompt_bufnr, false)
+          end,
+        },
       },
     }
 
@@ -78,6 +97,7 @@ return {
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>sp', '<CMD>Telescope project<CR>', { desc = '[ ] Find existing buffers' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
