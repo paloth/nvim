@@ -10,6 +10,7 @@ return {
     },
     formatters_by_ft = {
       go = { 'goimports', 'gofumpt', 'golines' },
+      javascript = { 'eslint_d' },
       json = { 'prettier' },
       lua = { 'stylua' },
       markdown = { 'prettier' },
