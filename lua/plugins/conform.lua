@@ -11,10 +11,10 @@ return {
     formatters_by_ft = {
       go = { 'goimports', 'gofumpt', 'golines' },
       javascript = { 'eslint_d' },
-      json = { 'prettier' },
+      json = { 'eslint_d' },
       lua = { 'stylua' },
       markdown = { 'prettier' },
-      yaml = { 'prettier' },
+      yaml = { 'eslint_d' },
     },
   },
 }
