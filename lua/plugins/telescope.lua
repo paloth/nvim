@@ -1,11 +1,10 @@
 return {
-  -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    { -- If encountering errors, see telescope-fzf-native README for install instructions
+    {
       'nvim-telescope/telescope-fzf-native.nvim',
 
       -- `build` is used to run some command when the plugin is installed/updated.
@@ -20,50 +19,42 @@ return {
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-telescope/telescope-project.nvim' },
-
-    -- Useful for getting pretty icons, but requires a Nerd Font.
+    { 'nvim-telescope/telescope-file-browser.nvim' },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
-    -- Telescope is a fuzzy finder that comes with a lot of different things that
-    -- it can fuzzy find! It's more than just a "file finder", it can search
-    -- many different aspects of Neovim, your workspace, LSP, and more!
-    --
-    -- The easiest way to use telescope, is to start by doing something like:
-    --  :Telescope help_tags
-    --
-    -- After running this command, a window will open up and you're able to
-    -- type in the prompt window. You'll see a list of help_tags options and
-    -- a corresponding preview of the help.
-    --
-    -- Two important keymaps to use while in telescope are:
-    --  - Insert mode: <c-/>
-    --  - Normal mode: ?
-    --
-    -- This opens a window that shows you all of the keymaps for the current
-    -- telescope picker. This is really useful to discover what Telescope can
-    -- do as well as how to actually do it!
+    local fb_actions = require 'telescope._extensions.file_browser.actions'
 
-    -- [[ Configure Telescope ]]
-    -- See `:help telescope` and `:help telescope.setup()`
     require('telescope').setup {
-      -- You can put your default mappings / updates / etc. in here
-      --  All the info you're looking for is in `:help telescope.setup()`
-      --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
-      -- pickers = {}
+      -- pickers = {},
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        file_browser = {
+          theme = 'dropdown',
+          hijack_netrw = true,
+          hidden = {
+            file_browser = false,
+            folder_browser = false,
+          },
+          mappings = {
+            ['n'] = {
+              ['a'] = fb_actions.create,
+              ['r'] = fb_actions.rename,
+              ['m'] = fb_actions.move,
+              ['y'] = fb_actions.copy,
+              ['d'] = fb_actions.remove,
+            },
+          },
+        },
         project = {
           base_dirs = {
             '~/repos/',
-            { '~/.config/', max_depth = 2 },
+            {
+              '~/.config/',
+              max_depth = 2,
+            },
           },
           hidden_files = true, -- default: false
           display_type = 'minimal',
@@ -87,6 +78,8 @@ return {
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
+    vim.keymap.set('n', '<leader>st', '<CMD>Telescope file_browser path=%:p:h select_buffer=true<CR>', { desc = '[S]earch [T]ree' })
+    vim.keymap.set('n', '<leader>sp', '<CMD>Telescope project<CR>', { desc = '[S]earch [P]roject' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
@@ -96,8 +89,7 @@ return {
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-    vim.keymap.set('n', '<leader>sp', '<CMD>Telescope project<CR>', { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[F]ind existing buffers' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()
