@@ -6,7 +6,6 @@ return {
     'nvim-lua/plenary.nvim',
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-
       -- `build` is used to run some command when the plugin is installed/updated.
       -- This is only run then, not every time Neovim starts up.
       build = 'make',
@@ -32,8 +31,9 @@ return {
           require('telescope.themes').get_dropdown(),
         },
         file_browser = {
-          theme = 'dropdown',
+          theme = 'ivy',
           hijack_netrw = true,
+          initial_mode = 'normal',
           hidden = {
             file_browser = false,
             folder_browser = false,
@@ -56,15 +56,14 @@ return {
               max_depth = 2,
             },
           },
-          hidden_files = true, -- default: false
-          display_type = 'minimal',
+          hidden_files = true,
+          display_type = 'full',
           theme = 'dropdown',
           order_by = 'desc',
           search_by = 'title',
-          sync_with_nvim_tree = true, -- default false
+          sync_with_nvim_tree = true,
           -- default for on_project_selected = find project files
           on_project_selected = function(prompt_bufnr)
-            -- Do anything you want in here. For example:
             local project_actions = require 'telescope._extensions.project.actions'
             project_actions.change_working_directory(prompt_bufnr, false)
           end,
