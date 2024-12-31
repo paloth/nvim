@@ -29,6 +29,10 @@ return {
         toggleterm = false,
         treesitter = true,
       },
+      options = {
+        cursorline = true,
+        transparency = true,
+      },
     }
   end,
 }
