@@ -9,8 +9,10 @@ vim.g.have_nerd_font = true
 
 local opts = require 'opts'
 local keys = require 'keys'
+local filetypes = require 'filetypes'
 opts.init()
 keys.init()
+filetypes.init()
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
