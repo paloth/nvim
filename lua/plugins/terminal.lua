@@ -9,8 +9,6 @@ return {
       autochdir = true,
       float_opts = {
         border = 'curved',
-        width = 250,
-        height = 55,
         title_pos = 'center',
       },
     },
