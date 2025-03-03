@@ -1,37 +1,30 @@
 return {
-  'olimorris/onedarkpro.nvim',
+  'catppuccin/nvim',
   priority = 1000, -- make sure to load this before all the other start plugins
   init = function()
-    vim.cmd.colorscheme 'onedark_vivid'
+    vim.cmd.colorscheme 'catppuccin'
 
     -- You can configure highlights by doing something like
     vim.cmd.hi 'Comment gui=none'
   end,
   config = function()
-    require('onedarkpro').setup {
-      styles = { -- For example, to apply bold and italic, use "bold,italic"
-        types = 'italic', -- Style that is applied to types
-        methods = 'NONE', -- Style that is applied to methods
-        numbers = 'NONE', -- Style that is applied to numbers
-        strings = 'NONE', -- Style that is applied to strings
-        comments = 'italic', -- Style that is applied to comments
-        keywords = 'bold,italic', -- Style that is applied to keywords
-        constants = 'bold', -- Style that is applied to constants
-        functions = 'bold,italic', -- Style that is applied to functions
-        operators = 'NONE', -- Style that is applied to operators
-        variables = 'NONE', -- Style that is applied to variables
-        parameters = 'NONE', -- Style that is applied to parameters
-        conditionals = 'italic', -- Style that is applied to conditionals
-        virtual_text = 'NONE', -- Style that is applied to virtual text
-      },
-      plugins = { -- Override which plugin highlight groups are loaded
-        telescope = false,
-        toggleterm = false,
-        treesitter = true,
-      },
-      options = {
-        cursorline = true,
-        transparency = true,
+    require('catppuccin').setup {
+      flavour = 'auto', -- latte, frappe, macchiato, mocha
+      transparent_background = true,
+      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+        booleans = {},
+        comments = { 'italic' }, -- Change the style of comments
+        conditionals = { 'italic' },
+        functions = { 'bold', 'italic' },
+        keywords = { 'bold' },
+        loops = { 'italic' },
+        numbers = {},
+        operators = {},
+        properties = {},
+        strings = {},
+        types = { 'italic' },
+        variables = { 'bold', 'italic' },
+        -- miscs = {}, -- Uncomment to turn off hard-coded styles
       },
     }
   end,
