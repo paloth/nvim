@@ -9,6 +9,7 @@ return {
       lsp_fallback = true,
     },
     formatters_by_ft = {
+      bash = { 'shfmt' },
       go = { 'goimports', 'gofumpt', 'golines' },
       javascript = { 'eslint_d' },
       json = { 'eslint_d' },
