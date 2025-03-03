@@ -35,8 +35,8 @@ return {
           hijack_netrw = true,
           initial_mode = 'normal',
           hidden = {
-            file_browser = false,
-            folder_browser = false,
+            file_browser = true,
+            folder_browser = true,
           },
           mappings = {
             ['n'] = {
