@@ -5,23 +5,24 @@ return {
   main = 'nvim-silicon',
   init = function()
     local wk = require 'which-key'
-    wk.register({
-      ['p'] = {
-        name = 'Silicon',
-        ['s'] = {
-          function()
-            require('nvim-silicon').file()
-          end,
-          '[P]rint [S]ave screenshot (to file)',
-        },
-        ['c'] = {
-          function()
-            require('nvim-silicon').clip()
-          end,
-          '[P]rint [C]opy screenshot (to clipboard)',
-        },
+    wk.add {
+      mode = { 'v' },
+      { 'n', '<leader>p', group = 'Silicon' },
+      {
+        '<leader>pc',
+        function()
+          require('nvim-silicon').clip()
+        end,
+        desc = '[P]rint [C]opy screenshot (to clipboard)',
       },
-    }, { prefix = '<leader>', mode = 'v' })
+      {
+        '<leader>ps',
+        function()
+          require('nvim-silicon').file()
+        end,
+        desc = '[P]rint [S]ave screenshot (to file)',
+      },
+    }
   end,
   opts = {
     font = 'JetBrainsMono Nerd Font=28',
