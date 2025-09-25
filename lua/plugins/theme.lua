@@ -3,14 +3,19 @@ return {
   priority = 1000, -- make sure to load this before all the other start plugins
   init = function()
     vim.cmd.colorscheme 'catppuccin'
-
-    -- You can configure highlights by doing something like
-    vim.cmd.hi 'Comment gui=none'
   end,
   config = function()
     require('catppuccin').setup {
       flavour = 'auto', -- latte, frappe, macchiato, mocha
       transparent_background = true,
+      highlight_overrides = {
+        all = function(colors)
+          return {
+            NormalFloat = { bg = colors.none },
+            TelescopeBorder = { bg = colors.none },
+          }
+        end,
+      },
       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
         booleans = {},
         comments = { 'italic' }, -- Change the style of comments
