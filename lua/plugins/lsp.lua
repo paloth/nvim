@@ -71,6 +71,14 @@ return {
             callback = vim.lsp.buf.clear_references,
           })
         end
+
+        -- Enable inlay hints if supported
+        if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+          vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+          map('<leader>th', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }, { bufnr = event.buf })
+          end, '[T]oggle Inlay [H]ints')
+        end
       end,
     })
 
@@ -159,6 +167,12 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
+      'goimports', -- Go imports formatter
+      'gofumpt', -- Go formatter
+      'golines', -- Go line length formatter
+      'golangci-lint', -- Go linter
+      'prettier', -- For markdown/json/yaml
+      'shfmt', -- Bash formatter
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

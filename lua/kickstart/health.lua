@@ -20,13 +20,25 @@ local check_version = function()
 end
 
 local check_external_reqs = function()
-  -- Basic utils: `git`, `make`, `unzip`
+  -- Basic utils: `git`, `make`, `unzip`, `rg`
+  vim.health.info 'Checking for required executables'
   for _, exe in ipairs { 'git', 'make', 'unzip', 'rg' } do
     local is_executable = vim.fn.executable(exe) == 1
     if is_executable then
       vim.health.ok(string.format("Found executable: '%s'", exe))
     else
       vim.health.warn(string.format("Could not find executable: '%s'", exe))
+    end
+  end
+
+  -- Optional but recommended tools
+  vim.health.info 'Checking for optional tools (for enhanced features)'
+  for _, exe in ipairs { 'fd', 'lazygit', 'prettier', 'stylua', 'goimports' } do
+    local is_executable = vim.fn.executable(exe) == 1
+    if is_executable then
+      vim.health.ok(string.format("Found optional executable: '%s'", exe))
+    else
+      vim.health.info(string.format("Optional executable not found: '%s' (install for better experience)", exe))
     end
   end
 

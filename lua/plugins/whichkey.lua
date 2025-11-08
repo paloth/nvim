@@ -8,6 +8,8 @@ return {
     -- Document existing key chains
     require('which-key').add {
       {
+        { '<leader>b', group = '[B]uffer' },
+        { '<leader>b_', hidden = true },
         { '<leader>c', group = '[C]ode' },
         { '<leader>c_', hidden = true },
         { '<leader>d', group = '[D]ocument' },
@@ -18,6 +20,8 @@ return {
         { '<leader>r_', hidden = true },
         { '<leader>s', group = '[S]earch' },
         { '<leader>s_', hidden = true },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>t_', hidden = true },
         { '<leader>v', group = '[V]iew' },
         { '<leader>v_', hidden = true },
         { '<leader>w', group = '[W]orkspace' },

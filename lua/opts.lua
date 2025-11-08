@@ -6,7 +6,7 @@ function opts.init()
   -- NOTE: You can change these options as you wish!
   --  For more options, you can see `:help option-list`
   vim.opt.number = true -- Make line numbers default
-  vim.opt.relativenumber = false -- Disable relative line numbers
+  vim.opt.relativenumber = true -- Enable relative line numbers
   vim.opt.mouse = 'a' -- Enable mouse mode, can be useful for resizing splits for example!
   vim.opt.showmode = false -- Don't show the mode, since it's already in status line
   vim.opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim.
@@ -31,6 +31,16 @@ function opts.init()
   vim.opt.inccommand = 'split' -- Preview substitutions live, as you type!
   vim.opt.cursorline = true -- Show which line your cursor is on
   vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
+  -- Enable true color support
+  vim.opt.termguicolors = true
+  -- Disable swap and backup files
+  vim.opt.swapfile = false
+  vim.opt.backup = false
+  vim.opt.writebackup = false
+  -- Session options
+  vim.opt.sessionoptions = 'buffers,curdir,tabpages,winsize,help,globals,skiprtp'
+  -- Window bar showing file path
+  vim.opt.winbar = '%=%m %f'
 end
 
 return opts
