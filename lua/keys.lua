@@ -31,8 +31,30 @@ function keys.init()
   vim.keymap.set('n', '<leader>vd', '<C-w>q', { desc = 'Close current view' })
 
   -- Move lines
-  vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line up', silent = true })
-  vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line down', silent = true })
+  vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down', silent = true })
+  vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move line up', silent = true })
+
+  -- Buffer navigation
+  vim.keymap.set('n', '[b', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+  vim.keymap.set('n', ']b', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+  vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = '[B]uffer [D]elete' })
+
+  -- Quickfix and location list navigation
+  vim.keymap.set('n', '[q', '<cmd>cprevious<CR>', { desc = 'Previous quickfix' })
+  vim.keymap.set('n', ']q', '<cmd>cnext<CR>', { desc = 'Next quickfix' })
+  vim.keymap.set('n', '[Q', '<cmd>cfirst<CR>', { desc = 'First quickfix' })
+  vim.keymap.set('n', ']Q', '<cmd>clast<CR>', { desc = 'Last quickfix' })
+
+  -- Useful text manipulation
+  -- Keep cursor position when joining lines
+  vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines' })
+
+  -- Center screen on search navigation
+  vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result' })
+  vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result' })
+
+  -- Better paste (don't yank replaced text)
+  vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
 end
 
 return keys

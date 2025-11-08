@@ -74,10 +74,13 @@ return {
     -- Enable telescope extensions, if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
+    pcall(require('telescope').load_extension, 'project')
+    pcall(require('telescope').load_extension, 'file_browser')
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader>st', '<CMD>Telescope file_browser path=%:p:h select_buffer=true<CR>', { desc = '[S]earch [T]ree' })
+    vim.keymap.set('n', '<leader>sT', '<CMD>Telescope file_browser<CR>', { desc = '[S]earch [T]ree (cwd)' })
     vim.keymap.set('n', '<leader>sp', '<CMD>Telescope project<CR>', { desc = '[S]earch [P]roject' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
