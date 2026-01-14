@@ -8,11 +8,26 @@ return {
     require('catppuccin').setup {
       flavour = 'auto', -- latte, frappe, macchiato, mocha
       transparent_background = true,
+      integrations = {
+        noice = true,
+        notify = true,
+      },
       highlight_overrides = {
         all = function(colors)
           return {
             NormalFloat = { bg = colors.none },
             TelescopeBorder = { bg = colors.none },
+            NotifyBackground = { bg = colors.none },
+            NotifyERRORBody = { bg = colors.none },
+            NotifyWARNBody = { bg = colors.none },
+            NotifyINFOBody = { bg = colors.none },
+            NotifyDEBUGBody = { bg = colors.none },
+            NotifyTRACEBody = { bg = colors.none },
+            NotifyERRORBorder = { bg = colors.none },
+            NotifyWARNBorder = { bg = colors.none },
+            NotifyINFOBorder = { bg = colors.none },
+            NotifyDEBUGBorder = { bg = colors.none },
+            NotifyTRACEBorder = { bg = colors.none },
           }
         end,
       },

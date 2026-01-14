@@ -9,6 +9,8 @@ function opts.init()
   vim.opt.relativenumber = true -- Enable relative line numbers
   vim.opt.mouse = 'a' -- Enable mouse mode, can be useful for resizing splits for example!
   vim.opt.showmode = false -- Don't show the mode, since it's already in status line
+  vim.opt.cmdheight = 0 -- Hide command line (using noice.nvim)
+  vim.opt.laststatus = 3 -- Global statusline
   vim.opt.clipboard = 'unnamedplus' -- Sync clipboard between OS and Neovim.
   vim.opt.breakindent = true -- Enable break indent
   vim.opt.undofile = true -- Save undo history
@@ -39,8 +41,6 @@ function opts.init()
   vim.opt.writebackup = false
   -- Session options
   vim.opt.sessionoptions = 'buffers,curdir,tabpages,winsize,help,globals,skiprtp'
-  -- Window bar showing file path
-  vim.opt.winbar = '%=%m %f'
 end
 
 return opts
