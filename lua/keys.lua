@@ -55,6 +55,11 @@ function keys.init()
 
   -- Better paste (don't yank replaced text)
   vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
+
+  -- Go specific keybindings (Gopher)
+  vim.keymap.set('n', '<leader>goa', '<cmd>GoTagAdd<cr>', { desc = 'Go Add Tags' })
+  vim.keymap.set('n', '<leader>gor', '<cmd>GoTagRm<cr>', { desc = 'Go Remove Tags' })
+  vim.keymap.set('n', '<leader>goi', '<cmd>GoImpl<cr>', { desc = 'Go Implement Interface' })
 end
 
 return keys

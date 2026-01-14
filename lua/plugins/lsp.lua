@@ -111,6 +111,32 @@ return {
             usePlaceholders = true,
             analyses = {
               unusedparams = true,
+              shadow = true,
+              unusedwrite = true,
+              fieldalignment = true,
+              nilness = true,
+              useany = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            codelenses = {
+              gc_details = false,
+              generate = true,
+              regenerate_cgo = true,
+              run_govulncheck = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
             },
           },
         },
@@ -171,6 +197,8 @@ return {
       'gofumpt', -- Go formatter
       'golines', -- Go line length formatter
       'golangci-lint', -- Go linter
+      'gomodifytags', -- Struct tag manipulator
+      'impl', -- Interface implementation generator
       'prettier', -- For markdown/json/yaml
       'shfmt', -- Bash formatter
     })
