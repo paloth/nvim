@@ -34,6 +34,7 @@ return {
           theme = 'ivy',
           hijack_netrw = true,
           initial_mode = 'normal',
+          grouped = true, -- Directories first, then files
           hidden = {
             file_browser = true,
             folder_browser = true,
