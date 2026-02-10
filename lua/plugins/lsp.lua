@@ -12,6 +12,39 @@ return {
     { 'j-hui/fidget.nvim', opts = {} },
   },
   config = function()
+    -- Helper function to check if we're in a Helm chart directory
+    local function is_helm_file(bufnr)
+      bufnr = bufnr or vim.api.nvim_get_current_buf()
+      local filepath = vim.api.nvim_buf_get_name(bufnr)
+      
+      if filepath == '' then
+        return false
+      end
+      
+      -- Get the directory of the current file
+      local dir = vim.fn.fnamemodify(filepath, ':h')
+      local parent_dir = vim.fn.fnamemodify(dir, ':h')
+      
+      -- Check if we're in a templates directory with Chart.yaml in the direct parent
+      if vim.fn.fnamemodify(dir, ':t') == 'templates' then
+        if vim.fn.filereadable(parent_dir .. '/Chart.yaml') == 1 then
+          return true
+        end
+      end
+      
+      return false
+    end
+
+    -- Auto-detect Helm files and set filetype
+    vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+      pattern = '*.yaml',
+      callback = function()
+        if is_helm_file() then
+          vim.bo.filetype = 'helm'
+        end
+      end,
+    })
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -101,6 +134,10 @@ return {
       -- clangd = {},
       terraformls = {
         filetypes = { 'terraform', 'terraform-vars' },
+      },
+      helm_ls = {
+        filetypes = { 'helm' },
+        cmd = { 'helm_ls', 'serve' },
       },
       gopls = {
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -201,6 +238,7 @@ return {
       'impl', -- Interface implementation generator
       'prettier', -- For markdown/json/yaml
       'shfmt', -- Bash formatter
+      'helm-ls', -- Helm language server
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
