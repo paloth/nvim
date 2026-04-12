@@ -35,7 +35,7 @@ return {
     lsp = {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-        ['vim.lsp.util.stylize_markdown'] = true,
+        -- stylize_markdown is deprecated in Nvim 0.12, let Neovim handle it natively
         ['cmp.entry.get_documentation'] = true,
       },
     },

@@ -1,54 +1,76 @@
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  lazy = false,
   build = ':TSUpdate',
   config = function()
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-    ---@diagnostic disable-next-line: missing-fields
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = {
-        'bash',
-        'c',
-        'diff',
-        'git_config',
-        'git_rebase',
-        'gitattributes',
-        'gitcommit',
-        'gitignore',
-        'go',
-        'html',
-        'json',
-        'lua',
-        'markdown',
-        'markdown_inline',
-        'nix',
-        'regex',
-        'toml',
-        'vim',
-        'vimdoc',
-        'yaml',
-      },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<C-space>',
-          node_incremental = '<C-space>',
-          scope_incremental = false,
-          node_decremental = '<bs>',
-        },
-      },
+    require('nvim-treesitter').setup {
+      -- Directory to install parsers and queries to
+      install_dir = vim.fn.stdpath('data') .. '/site',
     }
 
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    -- Install parsers (no-op if already installed)
+    local parsers = {
+      'bash',
+      'c',
+      'diff',
+      'git_config',
+      'git_rebase',
+      'gitattributes',
+      'gitcommit',
+      'gitignore',
+      'go',
+      'html',
+      'json',
+      'lua',
+      'markdown',
+      'markdown_inline',
+      'nix',
+      'regex',
+      'toml',
+      'vim',
+      'vimdoc',
+      'yaml',
+    }
+    require('nvim-treesitter').install(parsers)
+
+    -- Enable treesitter highlighting and indentation for all installed parsers.
+    -- Neovim 0.12 enables markdown highlighting by default; this covers the rest.
+    local ft_to_lang = {
+      bash = 'bash',
+      c = 'c',
+      diff = 'diff',
+      gitconfig = 'git_config',
+      gitrebase = 'git_rebase',
+      gitattributes = 'gitattributes',
+      gitcommit = 'gitcommit',
+      gitignore = 'gitignore',
+      go = 'go',
+      gomod = 'go',
+      gowork = 'go',
+      gotmpl = 'go',
+      html = 'html',
+      json = 'json',
+      lua = 'lua',
+      markdown = 'markdown',
+      nix = 'nix',
+      toml = 'toml',
+      vim = 'vim',
+      help = 'vimdoc',
+      yaml = 'yaml',
+      terraform = 'hcl',
+    }
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = vim.tbl_keys(ft_to_lang),
+      callback = function(args)
+        -- Enable treesitter highlighting
+        pcall(vim.treesitter.start, args.buf)
+        -- Enable treesitter indentation
+        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
   end,
 }

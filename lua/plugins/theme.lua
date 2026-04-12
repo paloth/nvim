@@ -1,9 +1,6 @@
 return {
   'catppuccin/nvim',
   priority = 1000, -- make sure to load this before all the other start plugins
-  init = function()
-    vim.cmd.colorscheme 'catppuccin'
-  end,
   config = function()
     require('catppuccin').setup {
       flavour = 'auto', -- latte, frappe, macchiato, mocha
@@ -47,5 +44,7 @@ return {
         -- miscs = {}, -- Uncomment to turn off hard-coded styles
       },
     }
+
+    vim.cmd.colorscheme 'catppuccin'
   end,
 }
