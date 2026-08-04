@@ -1,5 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
+  event = 'VeryLazy',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     local colors = {
@@ -48,7 +49,7 @@ return {
         lualine_y = { 'diff', 'diagnostics', 'filetype', 'progress' },
         lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
       },
-      inactive_sessions = {
+      inactive_sections = {
         lualine_a = { 'filename' },
         lualine_b = {},
         lualine_c = {},

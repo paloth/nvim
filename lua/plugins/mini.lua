@@ -1,8 +1,8 @@
 return {
   -- Collection of various small independent plugins/modules
   'echasnovski/mini.nvim',
+  event = 'VeryLazy',
   config = function()
-    require('mini.indentscope').setup()
     require('mini.pairs').setup()
     require('mini.align').setup()
 
@@ -22,6 +22,8 @@ return {
     require('mini.surround').setup()
 
     -- Note: mini.statusline removed as we're using lualine instead
+    -- Note: mini.indentscope removed -- indent-blankline already draws indent
+    -- guides, and running both stacked two sets of guides on the same lines.
 
     -- ... and there is more!
     --  Check out: https://github.com/echasnovski/mini.nvim
