@@ -6,8 +6,19 @@ return {
       flavour = 'auto', -- latte, frappe, macchiato, mocha
       transparent_background = true,
       integrations = {
+        dap = true,
+        dap_ui = true,
+        gitsigns = true,
+        indent_blankline = { enabled = true },
+        mason = true,
+        mini = { enabled = true },
+        native_lsp = { enabled = true, inlay_hints = { background = true } },
         noice = true,
         notify = true,
+        snacks = true,
+        telescope = { enabled = true },
+        treesitter = true,
+        which_key = true,
       },
       highlight_overrides = {
         all = function(colors)

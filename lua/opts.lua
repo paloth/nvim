@@ -41,6 +41,9 @@ function opts.init()
   vim.opt.scrolloff = 10 -- Minimal number of screen lines to keep above and below the cursor.
   -- Enable true color support
   vim.opt.termguicolors = true
+  -- Default border for every floating window (hover, diagnostics, LSP), so each
+  -- plugin no longer needs its own border option. Nvim 0.11+.
+  vim.opt.winborder = 'rounded'
   -- Disable swap and backup files
   vim.opt.swapfile = false
   vim.opt.backup = false
