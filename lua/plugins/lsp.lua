@@ -3,10 +3,6 @@ return {
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    -- Automatically install LSPs and related tools to stdpath for neovim
-    'mason-org/mason.nvim',
-    'mason-org/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'hrsh7th/cmp-nvim-lsp',
 
     -- Useful status updates for LSP.
@@ -63,10 +59,6 @@ return {
 
     -- Per-server overrides, merged on top of the `lsp/<name>.lua` definitions
     -- that nvim-lspconfig ships (which provide cmd, filetypes and root markers).
-    --
-    -- NOTE: this MUST go through `vim.lsp.config()`. mason-lspconfig 2.x removed
-    -- the `handlers` option, so the old `setup { handlers = { ... } }` shim
-    -- silently dropped every setting below.
     local servers = {
       gopls = {
         settings = {
@@ -131,15 +123,11 @@ return {
       vim.lsp.config(name, config)
     end
 
-    -- Ensure the servers and tools above are installed
-    --  To check the current status of installed tools and/or manually install
-    --  other tools, you can run
-    --    :Mason
-    --
-    --  You can press `g?` for help in this menu
-    require('mason').setup()
-
     -- Servers we want running, whether or not they carry an override above.
+    --
+    -- Their binaries come from Nix (darwin/home-manager/neovim.nix). mason.nvim
+    -- used to install them and failed silently: bashls, jsonls and yamlls were
+    -- listed here with nothing on disk to run.
     local enabled_servers = {
       'bashls',
       'gopls',
@@ -150,30 +138,6 @@ return {
       'yamlls',
     }
 
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.list_extend(vim.deepcopy(enabled_servers), {
-      'stylua', -- Used to format lua code
-      'goimports', -- Go imports formatter
-      'gofumpt', -- Go formatter
-      'golines', -- Go line length formatter
-      'golangci-lint', -- Go linter
-      'gomodifytags', -- Struct tag manipulator
-      'impl', -- Interface implementation generator
-      'prettier', -- For markdown/json/yaml
-      'shfmt', -- Bash formatter
-      -- Required by nvim-treesitter's `main` branch to compile parsers. Without
-      -- it every `:TSInstall` fails with `ENOENT: 'tree-sitter'` and you silently
-      -- keep only the parsers built before it went missing.
-      'tree-sitter-cli',
-    })
-    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-    -- `automatic_enable` would start a client for every installed Mason package
-    -- that happens to have an lspconfig entry -- including formatters such as
-    -- `stylua`, which ships an `lsp/stylua.lua` and would run as a second,
-    -- redundant client next to conform. Enable exactly what we ask for instead.
-    require('mason-lspconfig').setup { automatic_enable = false }
     vim.lsp.enable(enabled_servers)
   end,
 }

@@ -62,7 +62,6 @@ return {
           theme = 'dropdown',
           order_by = 'desc',
           search_by = 'title',
-          sync_with_nvim_tree = true,
           -- default for on_project_selected = find project files
           on_project_selected = function(prompt_bufnr)
             local project_actions = require 'telescope._extensions.project.actions'

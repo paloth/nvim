@@ -1,12 +1,6 @@
 local opts = {}
 
 function opts.init()
-  -- Mason installs its binaries here and normally prepends this itself, but only
-  -- once mason.nvim loads. nvim-treesitter runs at startup and shells out to the
-  -- `tree-sitter` CLI before that happens, so every parser build failed with
-  -- `ENOENT: 'tree-sitter'`. Prepend it up front instead.
-  vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin') .. ':' .. vim.env.PATH
-
   -- [[ Setting options ]]
   -- See `:help vim.opt`
   -- NOTE: You can change these options as you wish!

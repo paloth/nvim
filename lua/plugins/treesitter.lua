@@ -18,7 +18,11 @@ return {
     -- registered below -- otherwise the entry is inert. That is what previously
     -- left `terraform` (which needs the `hcl` parser) with no highlighting.
     local ft_to_parser = {
+      -- NOTE: the key is the *filetype*. A shell script is `sh`, not `bash`, so
+      -- the lone `bash` key left every .sh file without highlighting. Both are
+      -- listed because Neovim uses either depending on how the file is detected.
       bash = 'bash',
+      sh = 'bash',
       c = 'c',
       diff = 'diff',
       dockerfile = 'dockerfile',

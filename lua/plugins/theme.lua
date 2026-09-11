@@ -10,7 +10,6 @@ return {
         dap_ui = true,
         gitsigns = true,
         indent_blankline = { enabled = true },
-        mason = true,
         mini = { enabled = true },
         native_lsp = { enabled = true, inlay_hints = { background = true } },
         noice = true,

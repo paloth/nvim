@@ -1,21 +1,19 @@
 # Check Lua Formatting
 name: Check Lua Formatting
-on: pull_request_target
+# `pull_request_target` runs with a write-scoped token against the *base* repo,
+# which is not something a formatting check needs. `pull_request` is enough.
+on: [pull_request, push]
 
 jobs:
   stylua-check:
-    if: github.repository == 'nvim-lua/kickstart.nvim'
     name: Stylua Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+        uses: actions/checkout@v4
       - name: Stylua Check
-        uses: JohnnyMorganz/stylua-action@v3
+        uses: JohnnyMorganz/stylua-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest
           args: --check .
-

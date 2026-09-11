@@ -14,15 +14,12 @@ return {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 
-    -- Installs the debug adapters for you
-    'mason-org/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
     'nvim-neotest/nvim-nio',
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
   },
-  -- Loading on these keys keeps nvim-dap and its five dependencies (dap-ui,
-  -- nio, dap-go, mason, mason-nvim-dap) out of start-up entirely.
+  -- Loading on these keys keeps nvim-dap and its dependencies (dap-ui, nio,
+  -- dap-go) out of start-up entirely.
   --
   -- NOTE: breakpoints live under <leader>d, not <leader>b. <leader>b is the
   -- buffer prefix (<leader>bd), so binding it directly made every <leader>b
@@ -96,25 +93,8 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
-    require('mason-nvim-dap').setup {
-      -- Install the adapters listed below on demand.
-      --
-      -- NOTE: the key is `automatic_installation`. `automatic_setup` -- what
-      -- this used to say -- is an internal module name, not a setting, so it
-      -- was silently ignored.
-      automatic_installation = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
-      handlers = {},
-
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
-      },
-    }
+    -- The delve adapter binary (dlv) comes from Nix; mason-nvim-dap used to
+    -- install it here.
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
